@@ -28,9 +28,11 @@
 <meta property="og:description" content="这篇论文的中文翻译参考了Duke Lee大佬的资料，但是本文的重点不在于翻译，而在于对知识体系的总结。如何让机器理解人类语言是人工智能领域长期存在的挑战之一。但是首先，我们必须知道“怎样才算理解人类语言？”，作者认为阅读理解任务——在一篇文章中回答理解性问题——是一种恰当而重要的方法。就像我们使用阅读理解测试来衡量一个人对一段文字的理解程度一样，我们相信它也可以在评估计算机系统对人类语言的理解程度">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://aliceneet.github.io/2020/04/13/chendq-thesis-zh/F1.1.png">
+<meta property="og:image" content="http://aliceneet.github.io/chendq-thesis-zh/F1.1.png">
 <meta property="og:image" content="http://aliceneet.github.io/2020/04/13/chendq-thesis-zh/F1.2.png">
+<meta property="og:image" content="http://aliceneet.github.io/2020/04/13/chendq-thesis-zh/F2.1.png">
 <meta property="article:published_time" content="2020-04-13T05:19:49.000Z">
-<meta property="article:modified_time" content="2020-04-17T10:10:12.528Z">
+<meta property="article:modified_time" content="2020-04-18T09:10:42.267Z">
 <meta property="article:author" content="AliceNEET">
 <meta property="article:tag" content="自然语言处理">
 <meta property="article:tag" content="图神经网络">
@@ -193,7 +195,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-17 18:10:12" itemprop="dateModified" datetime="2020-04-17T18:10:12+08:00">2020-04-17</time>
+                <time title="修改时间：2020-04-18 17:10:42" itemprop="dateModified" datetime="2020-04-18T17:10:42+08:00">2020-04-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -222,7 +224,6 @@
 <a id="more"></a>
 
 <h1 id="前沿（Preface）"><a href="#前沿（Preface）" class="headerlink" title="前沿（Preface）"></a>前沿（Preface）</h1><p>这篇论文的中文翻译参考了 <a href="https://chendq-thesis-zh.readthedocs.io/en/latest/" target="_blank" rel="noopener">Duke Lee</a> 大佬的资料，但是本文的重点不在于翻译，而在于对<strong>知识体系</strong>的总结。</p>
-<p>本人目前研二，但是在机器阅读理解上一直没有入门，老师经常想让我换方向（比如VQA或者DBQA等等），但是我觉得我还没有走到机器阅读理解的前沿，我不想放弃，或者说，本着一颗初心吧，有始有终。</p>
 <p>第一次接触陈丹琦这个名字是在CS224N 2017，她当时还是这门课的助教（Teaching Assistants），Christopher Manning的学生，那个时候我才研一，自然语言处理是啥都还不知道，但是这个名字在我心中深深的埋下了种子。</p>
 <p>2012年毕业于清华大学计算机科学实验班（“姚班”）<br>2018毕业于斯坦福大学计算机科学系</p>
 <p>在接近2年后的今天，所有课程任务都几乎完成了，自然语言处理也刚刚踏入了一个脚尖，刚好老师让我做关于机器阅读理解的任务，就开始大肆收罗论文，想一口气吃一个胖子，但是我发现我错了，我看的论文，现在基本都不记得了，有哪些优势点，哪些缺点，哪些创新点，还有哪些可以改进，已经忘记的差不多了，我走入了误区，我需要改变我的研究策略。</p>
@@ -244,6 +245,9 @@
 <p>论文中展示了MCTEST数据集的例子，仅仅使用了简单的词汇和语法（在7岁以前小孩都能读懂，大概词汇量在7000左右，分为MC160和MC500两个数据集，MC160是人工构建的，而MC500使用了一定的自动化构建方法，为了使两者的质量达到相同的水平，MC500还进行了语法测试）。</p>
 <p>该数据集是2013年微软研究院构建的，为了处理这样一段文本，NLP社区花了几十年的时间来解决文本理解各个方面的不同任务，包括：词性标注（Part-of-speech Tagging）、命名实体识别（Named Entity Recognition，NER）、语义解析（Syntactic Parsing，SP）、共指消解（Coreference Resolution，CR）</p>
 <p><img src="/2020/04/13/chendq-thesis-zh/F1.1.png" alt="F1.1"></p>
+<!-- <img src="/chendq-thesis-zh/F1.1.png" class="[image]" title="[1344] [946] " alt="F1.1]"> -->
+
+
 <hr>
 <p>在这里我更推荐一篇文章来阐明自然语言处理的一些任务总结。<br><a href="https://www.jianshu.com/p/d80b065bdcf0" target="_blank" rel="noopener">自然语言处理(NLP)一些任务的总结</a> 我猜作者只提及上述4种任务是因为在机器阅读理解中这4种任务的作用比较大。</p>
 <hr>
@@ -263,8 +267,20 @@
 <h1 id="第二章-阅读理解总览（An-Overview-of-Reading-Comprehension）"><a href="#第二章-阅读理解总览（An-Overview-of-Reading-Comprehension）" class="headerlink" title="第二章 阅读理解总览（An Overview of Reading Comprehension）"></a>第二章 阅读理解总览（An Overview of Reading Comprehension）</h1><p><em>When a person understands a story， he can demonstrate his understanding by answering questions about the story. Since questions can be devised to query any aspect of text comprehension， the ability to answer questions is the strongest possible demonstration of understanding. If a computer is said to understand a story， we must demand of the computer the same demonstration of understanding that we require of people. Until such demands are met， we have no way of evaluating text understanding programs.</em></p>
 <p><em>当一个人理解了一个故事，他可以通过回答关于这个故事的问题来展示他的理解力。因为问题可以用来质疑文本理解的任何方面，所以回答问题的能力是理解能力的最有力的证明。如果说计算机可以理解一个故事，那么我们必须要求计算机做出我们要求人们做出的同样的理解演示。在这样的要求满足之前，我们无法评估任何文本理解系统。</em></p>
 <p>Wendy Lehnert， 1977</p>
-<h2 id="2-1-历史"><a href="#2-1-历史" class="headerlink" title="2.1 历史"></a>2.1 历史</h2><p>阅读理解系统的历史可以追溯到20世纪70年代，那个时候研究人员已经认识到把阅读理解作为一种方法来测试计算机程序对语言的理解能力的重要性。但是受限于计算机的计算速度，系统基本都是基于脚本和计划框架来进行的，并且实际系统都是通过手工编码实现的，很难推广到更广泛的领域。</p>
-<p>转机出现在了2013年至2015年之间，人们通常将阅读理解任务定义为监督学习（Supervised Learning）问题，研究员以（文章，问题，回答）三元组的形式收集人类标注好的训练例子，希望系统可以通过训练统计模型来学习将一段话和问题形成的对映射到他们相对应的答案上面去：$ F（passage， question）–&gt;answer $。</p>
+<h2 id="2-1-历史"><a href="#2-1-历史" class="headerlink" title="2.1 历史"></a>2.1 历史</h2><p>阅读理解系统的历史可以追溯到20世纪70年代，那个时候研究人员已经认识到把阅读理解作为一种方法来测试计算机程序对语言的理解能力的重要性。但是受限于计算机的计算速度，系统是基于脚本和计划框架来进行的，并且实际系统都是通过手工编码实现的，很难推广到更广泛的领域。</p>
+<p>在2013年至2015年之间，人们将阅读理解任务定义为监督学习（Supervised Learning）问题，研究员以（文章，问题，回答）三元组的形式收集人类标注好的训练例子，希望系统可以通过训练统计模型来学习将一段话和问题形成的对映射到他们相对应的答案上面去：$ F（passage， question）–&gt;answer $</p>
+<p>在此期间，两个值得注意的数据集是MCTEST和PROCESSBANK。MCTEST收集660个虚构的故事，每个故事有4个多选题（每个问题有4个假设答案，其中一个是正确的）。PROCESSBANK旨在回答描述生物过程的段落中的二选择问题，并要求理解过程中实体和事件之间的关系。数据集由585个问题组成，分布在200段中。</p>
+<p>在最初的MCTEST paper中，Richardson等人（2013）在没有利用任何训练数据的情况下，提出了几个基于规则的基线（baseline）。一种是启发式滑动窗口方法，它测量问题、答案和滑动窗口中单词之间的加权单词重叠/距离信息；另一种方法是通过将每个问答对转换为一个语句来运行现成的文本蕴涵系统。</p>
+<p>在PROCESSBANK数据集上，Berant等人（2014）提出了一种统计模型，该模型首先学会预测流程结构，然后将问题映射到可以针对该结构执行的正式查询。同样，模型结合了大量的手工特征，最终在二分类任务上获得了66.7%的准确率。</p>
+<p>这些机器学习模型取得了一定的进步。然而，它们的改进仍然相当有限，其缺点总结如下：</p>
+<ol>
+<li>这些模型<strong>严重依赖于现有的语言工具</strong>，如依赖依存解析和语义角色标记（SRL）系统。然而，这些语言表示任务还远远没有解决，现成的工具通常是从单个领域（的文章）（例如，newswire文章）训练而来，在实际使用中存在泛化问题。因此，利用现有的语言注释作为特性有时会在这些基于特性的机器学习模型中增加噪音，而更高级别的注释（例如，篇章关系与词性标记），会让情况变得更糟糕。</li>
+<li><strong>模拟人类水平的理解是一个难以捉摸的挑战</strong>，而且总是很难从当前的语言表征中构建有效的特征。例如，对于图1.1中的第三个问题：How many friends does Alyssa have in this story？，当证据散布在整个文章中，基本不可能构建出一个有效特征的。</li>
+<li>尽管我们可以从人类标记的阅读理解示例中训练模型，这确实激励人心，但这些<strong>数据集仍然太小</strong>，无法支持表达性统计模型。例如，用于训练依存解析器的English Penn Treebank数据集包含39，832个示例，而在MCTEST中，用于训练的示例仅为1480个——更不用说阅读理解了，作为一项综合性的语言理解任务，阅读理解更加复杂，并且需要不同的推理能力。</li>
+</ol>
+<p>这个领域的转折点出现在2015年。DeepMind研究人员Hermann等人（2015）提出了一种新颖而廉价的方案，用于创建大规模监督训练数据（CNN/Daily）。<strong><a href="https://arxiv.org/abs/1506.03340" target="_blank" rel="noopener">论文</a></strong>。他们还提出了一个神经网络模型——一个基于attention机制的LSTM模型，命名为THE ATTENTIVE READER——并证明它在很大程度上优于符号NLP方法。在实验中，在CNN数据集中，THE ATTENTIVE READER获得63.8%的准确率，而符号NLP系统最多获得50.9%的准确率。数据创建的思想如下：CNN和《每日邮报》附有一些要点，总结了文章中所包含的信息。他们将一篇新闻文章作为passage，通过使用一个placeholder 来替换一个实体（entity）的方式将其中的一个要点转换为一个完形填空式的问题，而答案就是这个被替换的实体。为了确保这个系统需要真正的理解文章来完成这个任务，而不是使用世界知识（译者，知识库，即符号系统）或者语言模型来回答问题，他们运行了实体识别和指代消解系统，并且将所有在指代链中提到的每个实体替换为一个抽象的实体标记（例如：@entity6，可以在Fe2.1中看到例子）。最后，他们几乎没有任何成本地收集了近100万个数据示例。</p>
+<p><img src="/2020/04/13/chendq-thesis-zh/F2.1.png" alt="F2.1"></p>
+<p>Chen，<strong><a href="https://arxiv.org/abs/1606.02858" target="_blank" rel="noopener">论文</a></strong>，也研究了这个有史以来第一个大型的阅读理解数据集，并证明了一个简单、精心设计的神经网络模型能够将CNN数据集的性能提升到72.4%，这是另一个8.6%的绝对提升。然而，尽管这个半合成的数据集为训练有效的统计模型提供了一个理想的方法，但我们的结论是，由于数据的创建方法和指代误差，该数据集似乎是<strong>有噪声的</strong>，并且对于进一步的推动相关进展的帮助是有限的。</p>
 
     </div>
 
